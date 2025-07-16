@@ -1,0 +1,128 @@
+{
+  "name": "nexus",
+  "version": "1.0.0",
+  "description": "Discord benzeri masaüstü uygulaması",
+  "main": "dist/electron/main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "npm run electron-build && concurrently \"npm run react-dev\" \"npm run wait-and-electron\"",
+    "dev": "npm run electron-build && npm run react-dev",
+    "electron": "npm run electron-dev",
+    "wait-and-electron": "wait-on http://localhost:5173 --timeout 30000 --interval 1000 && npm run electron-dev",
+    "react-dev": "vite",
+    "electron-dev": "electron .",
+    "build": "npm run react-build && npm run electron-build",
+    "react-build": "vite build",
+    "electron-build": "tsc -p electron/tsconfig.json",
+    "package": "npm run build && electron-builder",
+    "dist": "npm run build && electron-builder --publish=never",
+    "publish": "npm run build && electron-builder --publish=always",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "discord",
+    "chat",
+    "electron",
+    "react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emoji-mart/data": "^1.2.1",
+    "@emoji-mart/react": "^1.1.1",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.9",
+    "@mui/material": "^6.1.9",
+    "@types/react-color": "^3.0.13",
+    "electron-updater": "^6.1.7",
+    "emoji-mart": "^5.6.0",
+    "firebase": "^11.1.0",
+    "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-color": "^2.19.3",
+    "react-dom": "^18.3.1",
+    "react-dropzone": "^14.3.8",
+    "react-router-dom": "^6.28.0",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/react": "^18.3.12",
+    "@types/react-beautiful-dnd": "^13.1.8",
+    "@types/react-dom": "^18.3.1",
+    "@types/uuid": "^9.0.7",
+    "@vitejs/plugin-react": "^4.6.0",
+    "concurrently": "^9.1.0",
+    "electron": "^33.2.0",
+    "electron-builder": "^24.13.3",
+    "electron-updater": "^6.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "vite": "^4.5.14",
+    "wait-on": "^8.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "build": {
+    "appId": "com.nexus.chat",
+    "productName": "Nexus",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "dist/electron/**/*",
+      "node_modules/**/*"
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Nexus"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "publisherName": "Nexus Team"
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.social-networking"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Network"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "mustafadmrsy",
+      "repo": "nexus"
+    }
+  }
+}
