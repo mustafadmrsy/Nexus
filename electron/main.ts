@@ -59,9 +59,10 @@ function createWindow(): void {
   } else {
     // Production'da build dosyasını yükle
     const indexPath = app.isPackaged 
-      ? path.join(process.resourcesPath, 'dist/index.html')
+      ? path.join(app.getAppPath(), 'dist/index.html')
       : path.join(__dirname, '../dist/index.html');
     
+    console.log('Loading index.html from:', indexPath);
     mainWindow.loadFile(indexPath);
   }
 
