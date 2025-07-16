@@ -83,7 +83,8 @@
     "files": [
       "dist/**/*",
       "dist/electron/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      ".env"
     ],
     "nsis": {
       "oneClick": false,
