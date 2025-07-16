@@ -57,7 +57,12 @@ function createWindow(): void {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    // Production'da build dosyasını yükle
+    const indexPath = app.isPackaged 
+      ? path.join(process.resourcesPath, 'dist/index.html')
+      : path.join(__dirname, '../dist/index.html');
+    
+    mainWindow.loadFile(indexPath);
   }
 
   // Pencere hazır olduğunda göster
