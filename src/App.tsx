@@ -105,9 +105,11 @@ const AppContent: React.FC = () => {
   }, [currentUser, userProfile, loading, navigate]);
 
   if (loading) {
+    console.log('🔄 App: Still loading...', { currentUser, userProfile, loading });
     return (
       <Box sx={{ 
         display: 'flex', 
+        flexDirection: 'column',
         justifyContent: 'center', 
         alignItems: 'center', 
         width: '100vw', 
@@ -115,6 +117,12 @@ const AppContent: React.FC = () => {
         backgroundColor: '#36393f'
       }}>
         <CircularProgress sx={{ color: '#5865f2' }} />
+        <Typography variant="h6" sx={{ mt: 2, color: '#dcddde' }}>
+          Nexus yükleniyor...
+        </Typography>
+        <Typography variant="body2" sx={{ mt: 1, color: '#b9bbbe' }}>
+          Auth durumu kontrol ediliyor...
+        </Typography>
       </Box>
     );
   }

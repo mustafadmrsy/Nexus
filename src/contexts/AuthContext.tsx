@@ -65,18 +65,36 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
+    // Production'da daha uzun timeout - masaüstü uygulaması için
+    const timeoutDuration = process.env.NODE_ENV === 'production' ? 8000 : 3000;
+    
+    console.log('🔄 AuthContext: Initializing with timeout:', timeoutDuration);
+    
+    const timeoutId = setTimeout(() => {
+      console.log('⏰ Auth timeout: Setting loading to false after', timeoutDuration, 'ms');
+      console.log('🔄 Current user state:', currentUser);
+      setLoading(false);
+    }, timeoutDuration);
+
     const unsubscribe = onAuthStateChange(async (user) => {
+      clearTimeout(timeoutId);
+      console.log('🔥 Auth state changed:', user ? `User: ${user.email}` : 'No user');
       setCurrentUser(user);
       
       // Kullanıcı yoksa veya email doğrulanmamışsa profil null yap
       if (!user || !user.emailVerified) {
+        console.log('👤 Setting userProfile to null');
         setUserProfile(null);
       }
       
+      console.log('✅ Setting loading to false');
       setLoading(false);
     });
 
-    return unsubscribe;
+    return () => {
+      clearTimeout(timeoutId);
+      unsubscribe();
+    };
   }, []);
 
   // Real-time profil dinleyicisi

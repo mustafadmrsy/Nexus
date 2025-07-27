@@ -3,6 +3,11 @@ import { autoUpdater } from 'electron-updater';
 import * as path from 'path';
 import { isDev } from './utils';
 
+// Production'da .env dosyasını yükle
+if (!isDev) {
+  require('dotenv').config({ path: path.join(__dirname, '../.env') });
+}
+
 let mainWindow: BrowserWindow | null = null;
 
 // Auto-updater configuration
@@ -58,12 +63,15 @@ function createWindow(): void {
     mainWindow.webContents.openDevTools();
   } else {
     // Production'da build dosyasını yükle
-    const indexPath = app.isPackaged 
-      ? path.join(app.getAppPath(), 'dist/index.html')
-      : path.join(__dirname, '../dist/index.html');
+    const indexPath = path.join(__dirname, 'dist', 'index.html');
     
     console.log('Loading index.html from:', indexPath);
+    console.log('__dirname:', __dirname);
+    
     mainWindow.loadFile(indexPath);
+    
+    // Production'da da DevTools'u aç (geçici olarak debug için)
+    mainWindow.webContents.openDevTools();
   }
 
   // Pencere hazır olduğunda göster
