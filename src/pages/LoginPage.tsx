@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser } from '../services/authService';
 import { useThemeContext } from '../contexts/ThemeContext';
 import { EmailVerificationDialog } from '../components/EmailVerificationDialog';
+import { NexusLogo } from '../components/NexusLogo';
 
 // Animasyonlar
 const float = keyframes`
@@ -287,22 +288,8 @@ const LoginPage: React.FC = () => {
         <Grid container spacing={6} alignItems="center">
           {/* Sol taraf - Özellikler */}
           <Grid item xs={12} md={6}>
-            <Box sx={{ mb: 6 }}>
-              <Typography 
-                variant="h2" 
-                component="h1" 
-                sx={{ 
-                  fontWeight: 700, 
-                  color: 'text.primary', 
-                  mb: 3,
-                  background: 'linear-gradient(45deg, #5865f2, #7289da)',
-                  backgroundClip: 'text',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
-                }}
-              >
-                Nexus
-              </Typography>
+            <Box sx={{ mb: 6, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <NexusLogo size="large" />
               <Typography 
                 variant="h5" 
                 sx={{ 

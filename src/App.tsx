@@ -8,6 +8,7 @@ import NotificationsPage from './pages/NotificationsPage';
 import MainLayout from './components/MainLayout';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ThemeContextProvider } from './contexts/ThemeContext';
+import { NexusLogo } from './components/NexusLogo';
 
 // Konsol uyarılarını azalt
 const originalWarn = console.warn;
@@ -80,11 +81,14 @@ const HomePage: React.FC = () => {
   return (
     <Box sx={{ 
       display: 'flex', 
+      flexDirection: 'column',
       justifyContent: 'center', 
       alignItems: 'center', 
       height: '100%',
-      color: 'text.secondary'
+      color: 'text.secondary',
+      gap: 2
     }}>
+      <NexusLogo size="large" />
       <Typography variant="h5">Ana Sayfa - Nexus'a Hoşgeldiniz</Typography>
     </Box>
   );

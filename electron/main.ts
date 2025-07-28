@@ -41,8 +41,13 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 function createWindow(): void {
-  // Ana pencereyi oluştur
-  mainWindow = new BrowserWindow({
+  try {
+    console.log('🔧 Creating main window...');
+    
+    // Ana pencereyi oluştur
+    const iconPath = path.resolve(__dirname, '../build/icon.png');
+    
+    mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     minWidth: 800,
@@ -52,21 +57,23 @@ function createWindow(): void {
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
     },
-    icon: path.join(__dirname, '../public/icon.png'),
+    icon: iconPath,
     titleBarStyle: 'default',
     show: false,
   });
 
   // Development'ta localhost'u, production'da build dosyalarını yükle
   if (isDev) {
+    console.log('🟢 Development mode - loading from localhost');
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
   } else {
     // Production'da build dosyasını yükle
-    const indexPath = path.join(__dirname, 'dist', 'index.html');
+    console.log('🔴 Production mode - loading from file');
     
-    console.log('Loading index.html from:', indexPath);
-    console.log('__dirname:', __dirname);
+    // Doğru path: dist/index.html (bir üst dizin)
+    const indexPath = path.join(__dirname, '../index.html');
+    console.log('Loading from:', indexPath);
     
     mainWindow.loadFile(indexPath);
     
@@ -90,11 +97,26 @@ function createWindow(): void {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+  } catch (error) {
+    console.error('❌ Error in createWindow:', error);
+  }
 }
 
 // Uygulama hazır olduğunda pencereyi oluştur
 app.whenReady().then(() => {
-  createWindow();
+  try {
+    console.log('🚀 App is ready, creating window...');
+    
+    // App icon'unu set et
+    const iconPath = path.resolve(__dirname, '../build/icon.png');
+    if (require('fs').existsSync(iconPath)) {
+      app.setAppUserModelId('com.nexus.chat');
+    }
+    
+    createWindow();
+  } catch (error) {
+    console.error('❌ Error creating window:', error);
+  }
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

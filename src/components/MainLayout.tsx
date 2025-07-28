@@ -10,6 +10,7 @@ import { Server, User, DirectMessage, ServerMember } from '../types';
 import { ProfileDropdown } from './ProfileDropdown';
 import { AddFriendDialog } from './AddFriendDialog';
 import { CreateServerDialog } from './CreateServerDialog';
+import { NexusLogo } from './NexusLogo';
 import { DirectMessagesView } from './DirectMessagesView';
 import { ServerManagementDialog } from './ServerManagementDialog';
 import { ServerChannelView } from './ServerChannelView';
@@ -998,16 +999,25 @@ const MainLayout: React.FC = () => {
       {/* Orta Panel - Mesajlar */}
       <ContentArea>
         <ChannelHeader>
-          <Typography variant="h6">
-            {currentView === 'friends' ? '👥 Arkadaşlar' :
-             currentView === 'dm' ? '💬 Direkt Mesajlar' :
-             currentView === 'servers' ? `🏠 ${currentServer?.name || 'Sunucu'}` :
-             currentView === 'page' ? (
-               location.pathname === '/profile' ? '👤 Profil Ayarları' :
-               location.pathname === '/settings' ? '⚙️ Ayarlar' :
-               location.pathname === '/notifications' ? '🔔 Bildirimler' : 'Nexus'
-             ) : 'Nexus'}
-          </Typography>
+          {currentView === 'friends' ? (
+            <Typography variant="h6">👥 Arkadaşlar</Typography>
+          ) : currentView === 'dm' ? (
+            <Typography variant="h6">💬 Direkt Mesajlar</Typography>
+          ) : currentView === 'servers' ? (
+            <Typography variant="h6">🏠 {currentServer?.name || 'Sunucu'}</Typography>
+          ) : currentView === 'page' ? (
+            location.pathname === '/profile' ? (
+              <Typography variant="h6">👤 Profil Ayarları</Typography>
+            ) : location.pathname === '/settings' ? (
+              <Typography variant="h6">⚙️ Ayarlar</Typography>
+            ) : location.pathname === '/notifications' ? (
+              <Typography variant="h6">🔔 Bildirimler</Typography>
+            ) : (
+              <NexusLogo size="medium" />
+            )
+          ) : (
+            <NexusLogo size="medium" />
+          )}
           {currentView === 'servers' && currentServer && (
             <Box sx={{ ml: 'auto', display: 'flex', gap: 1 }}>
               <IconButton 

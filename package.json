@@ -87,6 +87,7 @@
       "node_modules/**/*",
       ".env"
     ],
+    "icon": "build/icon.png",
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,

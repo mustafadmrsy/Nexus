@@ -80,8 +80,10 @@ VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 4. **Development modunda çalıştırın**
 ```bash
 npm run dev
-```
+
 npm run electron çalışması için
+
+```
 
 ## 📦 Build Alma
 
