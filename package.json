@@ -16,7 +16,7 @@
     "electron-build": "tsc -p electron/tsconfig.json",
     "package": "npm run build && electron-builder",
     "dist": "npm run build && electron-builder --publish=never",
-    "publish": "npm run build && electron-builder --publish=always",
+    "publish": "npm run build && electron-builder --publish=never",
     "preview": "vite preview"
   },
   "keywords": [
